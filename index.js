@@ -37,6 +37,11 @@ const server = http.createServer((req, res) => {
           }
         );
         break;
+      case "/api/admin":
+        const admin = { name: "admin", email: "admin@example.com" };
+        res.end(JSON.stringify(admin));
+
+        break;
 
       default:
         fs.readFile(
