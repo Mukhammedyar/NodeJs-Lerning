@@ -1,20 +1,55 @@
 const http = require("http");
+const path = require("path");
+const fs = require("fs");
 
 const server = http.createServer((req, res) => {
-  //   console.log(request.url);
-  //   response.write("<h1> hello from http server 2233</h1>");
-  //   response.end();
-  //   response.end("<h1> hello from http server 223q3</h1>");
-
   if (req.method === "GET") {
     res.writeHead(200, { "Content-type": "text/html" });
-    res.end(`
-          <h2> hello from http server</h2>
-          <form method="post" action="/">
-            <input type="email" name="email" placeholder="email"/>
-            <button type="submit">Submin </button>
-          </form>
-      `);
+
+    switch (req.url) {
+      case "/":
+        fs.readFile(
+          path.join(__dirname, "modules", "index.html"),
+          "utf8",
+          (err, data) => {
+            if (err) throw err;
+            res.end(data);
+          }
+        );
+        break;
+      case "/about":
+        fs.readFile(
+          path.join(__dirname, "modules", "about.html"),
+          "utf8",
+          (err, data) => {
+            if (err) throw err;
+            res.end(data);
+          }
+        );
+        break;
+      case "/contact":
+        fs.readFile(
+          path.join(__dirname, "modules", "contact.html"),
+          "utf8",
+          (err, data) => {
+            if (err) throw err;
+            res.end(data);
+          }
+        );
+        break;
+
+      default:
+        fs.readFile(
+          path.join(__dirname, "modules", "index.html"),
+          "utf8",
+          (err, data) => {
+            if (err) throw err;
+
+            res.end(data);
+          }
+        );
+        break;
+    }
   } else if (req.method === "POST") {
     res.writeHead(200, { "Content-type": "text/html; charset=utf-8" });
     const email = [];
